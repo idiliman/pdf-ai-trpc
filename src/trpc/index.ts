@@ -29,9 +29,27 @@ export const appRouter = router({
   getUserFiles: privateProcedure.query(async ({ ctx }) => {
     const { userId } = ctx;
 
-    return await db.file.findMany({
-      where: { id: userId },
+    const files = await db.file.findMany({
+      where: { userId },
     });
+
+    if (!files) throw new TRPCError({ code: 'NOT_FOUND' });
+
+    return files;
+  }),
+  getFile: privateProcedure.input(z.object({ key: z.string() })).mutation(async ({ ctx, input }) => {
+    const { userId } = ctx;
+
+    const file = await db.file.findFirst({
+      where: {
+        key: input.key,
+        userId,
+      },
+    });
+
+    if (!file) throw new TRPCError({ code: 'NOT_FOUND' });
+
+    return file;
   }),
   deleteFile: privateProcedure.input(z.object({ id: z.string() })).mutation(async ({ ctx, input }) => {
     const { userId } = ctx;
