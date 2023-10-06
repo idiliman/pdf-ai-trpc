@@ -10,28 +10,28 @@ interface PageProps {
   };
 }
 const Page = async ({ params }: PageProps) => {
-  //   const { fileId } = params;
+  const { fileId } = params;
 
-  //   const { getUser } = getKindeServerSession();
-  //   const user = getUser();
+  const { getUser } = getKindeServerSession();
+  const user = getUser();
 
-  //   if (!user || !user.id) redirect(`/auth-callback?origin=dashboard/${fileId}`);
+  if (!user || !user.id) redirect(`/auth-callback?origin=dashboard/${fileId}`);
 
-  //   const file = await db.file.findFirst({
-  //     where: {
-  //       id: fileId,
-  //       userId: user.id,
-  //     },
-  //   });
+  const file = await db.file.findFirst({
+    where: {
+      id: fileId,
+      userId: user.id,
+    },
+  });
 
-  //   if (!file) notFound();
+  if (!file) notFound();
 
   return (
-    <div className='flex-1 justify-between flex flex-col h-[calc(100vh-3.5rem)] '>
+    <div className='flex-1 justify-between flex flex-col h-[calc(100vh-3.5rem)]'>
       <div className='w-full mx-auto max-w-7xl grow lg:flex xl:px-2'>
         {/* left side */}
         <div className='px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6'>
-          <PdfRenderer />
+          <PdfRenderer url={file.url} />
         </div>
 
         {/* right side */}
