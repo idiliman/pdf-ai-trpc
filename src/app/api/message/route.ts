@@ -54,8 +54,6 @@ export async function POST(req: Request) {
 
   const results = await vectorStore.similaritySearch(message, 4);
 
-  console.log('POST ~ results:', results);
-
   const prevMessages = await db.message.findMany({
     where: {
       fileId,
