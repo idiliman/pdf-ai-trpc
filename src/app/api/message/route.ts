@@ -94,7 +94,8 @@ export async function POST(req: Request) {
   \n----------------\n
   
   CONTEXT:
-  ${results.map((r) => r.pageContent).join('\n\n')}
+   ${results.map((r) => r.pageContent).join('\n\n')}
+  
   
   USER INPUT: ${message}`,
       },
