@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET || '');
+    event = stripe.webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET!);
   } catch (err) {
     return new Response(`Webhook Error: ${err instanceof Error ? err.message : 'Unknown Error'}`, { status: 400 });
   }
@@ -25,8 +25,6 @@ export async function POST(request: Request) {
 
   if (event.type === 'checkout.session.completed') {
     const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
-
-    console.log('POST ~ subscription:', subscription);
 
     await db.user.update({
       where: {
