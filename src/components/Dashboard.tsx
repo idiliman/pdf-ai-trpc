@@ -11,7 +11,11 @@ import { Ghost, Loader2, MessageSquare, Plus, Trash } from 'lucide-react';
 import { Button } from './ui/button';
 import UploadButton from './UploadButton';
 
-const Dashboard = () => {
+interface PageProps {
+  subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
+}
+
+const Dashboard = ({ subscriptionPlan }: PageProps) => {
   const [currentlyDeletingFile, setCurrentlyDeletingFile] = useState<string | null>(null);
 
   const utils = trpc.useContext();
@@ -34,7 +38,7 @@ const Dashboard = () => {
     <main className='mx-auto max-w-7xl md:p-10'>
       <div className='flex flex-col items-start justify-between gap-4 pb-5 mt-8 border-b border-gray-200 sm:flex-row sm:items-center sm:gap-0'>
         <h1 className='mb-3 text-5xl font-bold text-gray-900'>My Files</h1>
-        <UploadButton />
+        <UploadButton isSubscribed={subscriptionPlan.isSubscribed} />
       </div>
 
       {files && files.length !== 0 ? (
