@@ -1,8 +1,8 @@
 import MaxWidthWrapper from './MaxWidthWrapper';
 import { buttonVariants } from './ui/button';
 import { ArrowRight } from 'lucide-react';
-// import UserAccountNav from './UserAccountNav'
-// import MobileNav from './MobileNav'
+import UserAccountNav from './UserAccountNav';
+import MobileNav from './MobileNav';
 
 import { LoginLink, RegisterLink, getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
@@ -20,7 +20,7 @@ const Navbar = () => {
             <span>quill.</span>
           </Link>
 
-          {/* <MobileNav isAuth={!!user} /> */}
+          <MobileNav isAuth={!!user} />
 
           <div className='items-center hidden space-x-4 sm:flex'>
             {!user ? (
@@ -62,15 +62,13 @@ const Navbar = () => {
                   Dashboard
                 </Link>
 
-                {/* <UserAccountNav
+                <UserAccountNav
                   name={
-                    !user.given_name || !user.family_name
-                      ? 'Your Account'
-                      : `${user.given_name} ${user.family_name}`
+                    !user.given_name || !user.family_name ? 'Your Account' : `${user.given_name} ${user.family_name}`
                   }
                   email={user.email ?? ''}
                   imageUrl={user.picture ?? ''}
-                /> */}
+                />
               </>
             )}
           </div>
